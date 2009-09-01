@@ -11,6 +11,7 @@ public class ObjectRelationalMapper{
     private DatabaseConfiguration config;
     private HostHandler handler;
     
+    @SuppressWarnings("unchecked")
     public ObjectRelationalMapper(HostHandler handler,DatabaseConfiguration config){
         this.config=config;
         this.handler=handler;
@@ -18,7 +19,12 @@ public class ObjectRelationalMapper{
             try{
                 System.out.println("Loading "+entity.getClassName());
                 Class cl=handler.getClass(entity.getClassName());
-                // Annotation en=cl.getAnnotation(Entity);
+                Entity en=(Entity)cl.getAnnotation(Entity.class);
+                if(en!=null){
+                    System.out.println("Yes, an entity");
+                }else{
+                    System.out.println("No, not an entity");
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }
